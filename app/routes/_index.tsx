@@ -1,11 +1,11 @@
-import type { Route } from "./+types/home";
 import { useSelection } from "@business-nxt/app-messaging-react";
+import type { MetaArgs } from "react-router";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({}: MetaArgs) {
   return [{ title: "New Business NXT App" }];
 }
 
-export default function Home({ loaderData }: Route.ComponentProps) {
+export default function Home() {
   const selection = useSelection();
   return (
     <main className="flex p-4">
