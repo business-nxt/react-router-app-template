@@ -4,8 +4,13 @@ import autoprefixer from "autoprefixer";
 import tailwindcss from "tailwindcss";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+import mkcert from "vite-plugin-mkcert";
 
 export default defineConfig(({ isSsrBuild }) => ({
+  server: {
+    proxy: {},
+    host: true,
+  },
   build: {
     rollupOptions: isSsrBuild
       ? {
@@ -26,5 +31,6 @@ export default defineConfig(({ isSsrBuild }) => ({
     }),
     reactRouter(),
     tsconfigPaths(),
+    mkcert(),
   ],
 }));
