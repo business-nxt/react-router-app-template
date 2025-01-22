@@ -1,5 +1,4 @@
 {
-  "name": "business-nxt-app-template",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,14 +9,14 @@
   },
   "dependencies": {
     "@business-nxt/app-messaging-react": "^0.2.0",
-    "@react-router/cloudflare": "^7.1.3",
-    "@react-router/fs-routes": "^7.1.3",
-    "@react-router/node": "^7.1.3",
-    "@react-router/serve": "^7.1.3",
+    "@react-router/cloudflare": "*",
+    "@react-router/fs-routes": "*",
+    "@react-router/node": "*",
+    "@react-router/serve": "*",
     "isbot": "^5.1.21",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.1.3"
+    "react-router": "*"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250121.0",
