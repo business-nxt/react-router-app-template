@@ -5,6 +5,7 @@ import tailwindcss from "tailwindcss";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import mkcert from "vite-plugin-mkcert";
+import path from "path";
 
 export default defineConfig(({ isSsrBuild }) => ({
   server: {
@@ -33,4 +34,9 @@ export default defineConfig(({ isSsrBuild }) => ({
     tsconfigPaths(),
     mkcert(),
   ],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./app"),
+    },
+  },
 }));
