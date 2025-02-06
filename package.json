@@ -5,21 +5,36 @@
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "wrangler dev",
-    "typecheck": "react-router typegen && tsc -b"
+    "typecheck": "react-router typegen && tsc -b",
+    "codegen": "graphql-codegen --config codegen.ts",
+    "update-schema": "tsx --env-file=.env update-schema.ts",
+    "deploy": "react-router build && wrangler deploy"
   },
   "dependencies": {
     "@business-nxt/app-messaging-react": "^1.1.0",
+    "@radix-ui/react-slot": "^1.1.2",
     "@react-router/cloudflare": "^7.1.5",
     "@react-router/fs-routes": "^7.1.5",
     "@react-router/node": "^7.1.5",
     "@react-router/serve": "^7.1.5",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "isbot": "^5.1.22",
+    "localforage": "^1.10.0",
+    "lucide-react": "^0.474.0",
+    "nanoid": "^5.0.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.1.5"
+    "react-router": "^7.1.5",
+    "remix-auth": "^4.1.0",
+    "remix-auth-oauth2": "^3.2.2",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7",
+    "ts-pattern": "^5.6.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250204.0",
+    "@graphql-codegen/cli": "^5.0.4",
     "@react-router/dev": "^7.1.5",
     "@types/node": "^20.17.17",
     "@types/react": "^19.0.8",

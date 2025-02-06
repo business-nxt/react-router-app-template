@@ -1,5 +1,7 @@
 import { useSelection } from "@business-nxt/app-messaging-react";
-import { useSearchParams, type MetaArgs } from "react-router";
+import { Lock } from "lucide-react";
+import { Link, useSearchParams, type MetaArgs } from "react-router";
+import { Button } from "~/components/ui/button";
 
 export function meta({}: MetaArgs) {
   return [{ title: "New Business NXT App" }];
@@ -37,6 +39,17 @@ export default function Home() {
             Are you running this app in Business NXT?
           </div>
         )}
+        <div className="flex flex-row">
+          <Button asChild>
+            <Link
+              to={`/protected-demo?${searchParams.toString()}`}
+              className="gap-2"
+            >
+              <Lock className="size-4" />
+              Go to protected page
+            </Link>
+          </Button>
+        </div>
         <div className="w-full space-y-6 px-4">
           <pre className="text-sm">
             {JSON.stringify({ selection, params }, null, 2)}

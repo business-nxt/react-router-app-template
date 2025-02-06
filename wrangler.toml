@@ -5,4 +5,4 @@ main = "./build/server/index.js"
 assets = { directory = "./build/client/" }
 
 [vars]
-VALUE_FROM_CLOUDFLARE = "Hello from Cloudflare"
+VISMA_CLIENT_ID = "your-client-id"

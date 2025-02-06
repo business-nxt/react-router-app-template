@@ -1,0 +1,18 @@
+import { useSelection } from "@business-nxt/app-messaging-react";
+import { useUser } from "~/hooks/useUser";
+
+export default function ProtectedDemo() {
+  const user = useUser();
+
+  const selection = useSelection();
+
+  return (
+    <main className="flex p-4 flex-col gap-8">
+      <header className="flex flex-col gap-4">
+        <div className="text-lg">Business NXT App Starter - Protected Page</div>
+      </header>
+      <p>Welcome {user?.name}</p>
+      <pre>{JSON.stringify(selection, null, 2)}</pre>
+    </main>
+  );
+}
