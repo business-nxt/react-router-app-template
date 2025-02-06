@@ -34,7 +34,7 @@ This project is using the [shadcn/ui](https://ui.shadcn.com/docs/components) com
 If you want to use `graphql-request`, create a folder in app called 'queries` and put your files in there. When you've changed a GraphQL-query you have to update the generated files. Use the script codegen for this.
 
 ```bash
-pnpm codegen
+npm run codegen
 ```
 
 ## Development APP url
@@ -46,7 +46,7 @@ The following urls are valid for local development:
 
 ## Production
 
-In order to publish your app in production, send the URL you want published to [ole at on-it.no](mailto:ole@on-it.no?subject=Business NXT Apps Publishing Request)
+In order to publish your app in production, send the URL you want published to [ole at on-it.no](mailto:ole@on-it.no?subject=Business%20NXT%20Apps%20Publishing%20Request)
 
 ## Known issues
 
