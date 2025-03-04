@@ -1,0 +1,21 @@
+name: Pull Request - Build and Test
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Build and Test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: install packages
+        run: pnpm install
+
+      - name: build
+        run: pnpm build
+p
