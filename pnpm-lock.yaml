@@ -57,8 +57,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       remix-auth-oauth2:
-        specifier: ^3.2.2
-        version: 3.2.2(remix-auth@4.1.0)
+        specifier: ^3.3.0
+        version: 3.3.0(remix-auth@4.1.0)
       tailwind-merge:
         specifier: ^3.0.1
         version: 3.0.1
@@ -463,8 +463,8 @@ packages:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
 
-  '@edgefirst-dev/data@0.0.2':
-    resolution: {integrity: sha512-kvw7RRDW9TJtOYHhzMYQ4g9x+ji87o02CROTnS9qCl2SZXauAPRpTiIQMGC5YLwvgzxV76Y2uMavQK4TQB1z0Q==}
+  '@edgefirst-dev/data@0.0.4':
+    resolution: {integrity: sha512-VLhlvEPDJ0Sd0pE6sAYTQkIqZCXVonaWlgRJIQQHzfjTXCadF77qqHj5NxaPSc4wCul0DJO/0MnejVqJAXUiRg==}
     engines: {node: '>=20.0.0'}
 
   '@envelop/core@5.0.3':
@@ -1019,8 +1019,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@mjackson/headers@0.9.0':
-    resolution: {integrity: sha512-1WFCu2iRaqbez9hcYYI611vcH1V25R+fDfOge/CyKc8sdbzniGfy/FRhNd3DgvFF4ZEEX2ayBrvFHLtOpfvadw==}
+  '@mjackson/headers@0.10.0':
+    resolution: {integrity: sha512-U1Eu1gF979k7ZoIBsJyD+T5l9MjtPONsZfoXfktsQHPJD0s7SokBGx+tLKDLsOY+gzVYAWS0yRFDNY8cgbQzWQ==}
 
   '@mjackson/node-fetch-server@0.2.0':
     resolution: {integrity: sha512-EMlH1e30yzmTpGLQjlFmaDAjyOeZhng1/XCd7DExR8PNAnG/G1tyruZxEoUe11ClnwGhGrtsdnyyUx1frSzjng==}
@@ -1485,8 +1485,8 @@ packages:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
 
-  arctic@3.2.3:
-    resolution: {integrity: sha512-DZkXM+ASHEaENRsq7pA8DL9smkerLDA9R8aziH0IQhiU+uuxDCzeF+YJ6Wc3gss8yhSrPdDNzMTbiVviVltJDA==}
+  arctic@3.4.0:
+    resolution: {integrity: sha512-xSsSGuzW7B26+LD96MU5jYnL+ovbjQUrvUsQTTII3jNvQTNhLcCLjBp+LeOP0SEqDHztu6anl0bq565fb/mhKg==}
 
   arg@5.0.2:
     resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
@@ -2911,8 +2911,8 @@ packages:
   remedial@1.0.8:
     resolution: {integrity: sha512-/62tYiOe6DzS5BqVsNpH/nkGlX45C/Sp6V+NtiN6JQNS1Viay7cWkazmRkrQrdFj2eshDe96SIQNIoMxqhzBOg==}
 
-  remix-auth-oauth2@3.2.2:
-    resolution: {integrity: sha512-m4jb7ZTFau4UcTEfuZQ+SPrXvXQSR8nrcAxww4ddxyvGHZglSeSYPqdwC81gMeEgIxDEgHULZgRfklV4wqJ4fA==}
+  remix-auth-oauth2@3.3.0:
+    resolution: {integrity: sha512-G0FFFJPS1SZ5XCe6Z2uVQC0t5S/ovHbSOTTxTnU+WzED1IuXIjuD3vVxn+hLJQFFRNeH8wFwyrI6IxjPbibljQ==}
     engines: {node: ^20.0.0 || >=20.0.0}
     peerDependencies:
       remix-auth: ^4.0.0
@@ -3976,7 +3976,7 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@edgefirst-dev/data@0.0.2': {}
+  '@edgefirst-dev/data@0.0.4': {}
 
   '@envelop/core@5.0.3':
     dependencies:
@@ -4610,7 +4610,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@mjackson/headers@0.9.0': {}
+  '@mjackson/headers@0.10.0': {}
 
   '@mjackson/node-fetch-server@0.2.0': {}
 
@@ -5045,7 +5045,7 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
-  arctic@3.2.3:
+  arctic@3.4.0:
     dependencies:
       '@oslojs/crypto': 1.0.1
       '@oslojs/encoding': 1.1.0
@@ -6527,11 +6527,11 @@ snapshots:
 
   remedial@1.0.8: {}
 
-  remix-auth-oauth2@3.2.2(remix-auth@4.1.0):
+  remix-auth-oauth2@3.3.0(remix-auth@4.1.0):
     dependencies:
-      '@edgefirst-dev/data': 0.0.2
-      '@mjackson/headers': 0.9.0
-      arctic: 3.2.3
+      '@edgefirst-dev/data': 0.0.4
+      '@mjackson/headers': 0.10.0
+      arctic: 3.4.0
       debug: 4.4.0
       remix-auth: 4.1.0
     transitivePeerDependencies:
