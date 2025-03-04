@@ -1,4 +1,4 @@
-import { useSelection } from "@business-nxt/app-messaging-react";
+import { SendMessage, useSelection } from "@business-nxt/app-messaging-react";
 import { Lock } from "lucide-react";
 import { Link, useSearchParams, type MetaArgs } from "react-router";
 import { Button } from "~/components/ui/button";
@@ -39,7 +39,20 @@ export default function Home() {
             Are you running this app in Business NXT?
           </div>
         )}
-        <div className="flex flex-row">
+        <div className="flex flex-row gap-4">
+          {selection && (
+            <Button
+              type="button"
+              onClick={async () => {
+                await SendMessage({
+                  messageType: "refresh-data-request",
+                  table: selection?.table,
+                });
+              }}
+            >
+              Refresh Data in {selection?.table}
+            </Button>
+          )}
           <Button asChild>
             <Link
               to={`/protected-demo?${searchParams.toString()}`}

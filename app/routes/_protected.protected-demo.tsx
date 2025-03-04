@@ -1,4 +1,5 @@
-import { useSelection } from "@business-nxt/app-messaging-react";
+import { SendMessage, useSelection } from "@business-nxt/app-messaging-react";
+import { Button } from "~/components/ui/button";
 import { useUser } from "~/hooks/useUser";
 
 export default function ProtectedDemo() {
@@ -12,6 +13,21 @@ export default function ProtectedDemo() {
         <div className="text-lg">Business NXT App Starter - Protected Page</div>
       </header>
       <p>Welcome {user?.name}</p>
+      <div className="flex flex-row">
+        {selection && (
+          <Button
+            type="button"
+            onClick={async () => {
+              await SendMessage({
+                messageType: "refresh-data-request",
+                table: selection?.table,
+              });
+            }}
+          >
+            Refresh Data in {selection?.table}
+          </Button>
+        )}
+      </div>
       <pre>{JSON.stringify(selection, null, 2)}</pre>
     </main>
   );
