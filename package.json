@@ -33,7 +33,7 @@
     "ts-pattern": "^5.6.2"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250303.0",
+    "@cloudflare/workers-types": "^4.20250310.0",
     "@graphql-codegen/cli": "^5.0.5",
     "@react-router/dev": "^7.2.0",
     "@types/node": "^20.17.23",
