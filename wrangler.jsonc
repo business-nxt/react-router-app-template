@@ -14,9 +14,6 @@
   "observability": {
     "enabled": true
   },
-  "vars": {
-    "VISMA_CLIENT_ID": "YOUR_VISMA_CLIENT_ID"
-  },
   /**
    * Smart Placement
    * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

@@ -4,21 +4,23 @@ import {
   createCookieSessionStorage,
   type LoaderFunctionArgs,
 } from "react-router";
+import { invariant } from "~/utils/invariant";
 
 // export the whole sessionStorage object
-export const createSessionStorage = (env: Env) =>
-  createCookieSessionStorage({
-    //kv: env.KV,
+export const createSessionStorage = (env: Env) => {
+  invariant(env.SESSION_SECRET, "SESSION_SECRET is not set in environment");
+  return createCookieSessionStorage({
     cookie: {
       name: `__session`, // use any name you want here
       sameSite: "none", // this helps with CSRF
       path: `/`, // remember to add this so the cookie will work in all routes
       httpOnly: true, // for security reasons, make this cookie http only
-      secrets: [env.REMIX_SESSION_SECRET!], // replace this with an actual secret
+      secrets: [env.SESSION_SECRET!], // replace this with an actual secret
       secure: true,
       maxAge: 24 * 60 * 60 * 180, // 180 days
     },
   });
+};
 
 export async function getSession(context: LoaderFunctionArgs) {
   return await createSessionStorage(context.context.cloudflare.env).getSession(
