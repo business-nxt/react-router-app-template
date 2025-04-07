@@ -10,10 +10,10 @@ npx create-react-router@latest --template business-nxt/react-router-app-template
 
 ## Visma Connect setup
 
-Head over to [the Visma Developer Portal](https://oauth.developers.visma.com/service-registry/) and create a new web application. Set the client id and secret in the `.dev.vars`-file. You also need to set the `REMIX_SESSION_SECRET`.
+Head over to [the Visma Developer Portal](https://oauth.developers.visma.com/service-registry/) and create a new web application. Set the client id and secret in the `.dev.vars`-file. You also need to set the `SESSION_SECRET`.
 
 ```env
-REMIX_SESSION_SECRET="really secret"
+SESSION_SECRET="really secret"
 VISMA_CLIENT_ID=""
 VISMA_CLIENT_SECRET=""
 ```
@@ -22,7 +22,7 @@ During development you can use the redirect URI `https://app.localtest.me:5173/a
 
 - Set Grant Type to `Authorization Code with PKCE`
 - Enable Offline Access
-- Do NOT enable `ID token returned in front-channel (Hybrid Flow)`
+- Do **NOT** enable `ID token returned in front-channel (Hybrid Flow)`
 - Set a sane refresh token expiry (365 days is cool!)
 
 ## Components
