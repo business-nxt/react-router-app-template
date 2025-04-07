@@ -7,9 +7,19 @@ const config: CodegenConfig = {
   ignoreNoDocuments: true,
   generates: {
     "app/gql/": {
-      preset: "client",
-      presetConfig: {
-        fragmentMasking: { unmaskFunctionName: "getFragmentData" },
+      plugins: [
+        "typescript",
+        "typescript-operations",
+        "typescript-graphql-request",
+      ],
+      config: {
+        onlyOperationTypes: true,
+        rawRequest: false,
+        preResolveTypes: true,
+        skipTypename: true,
+        skipDocumentsValidation: true,
+        addInfiniteQuery: false,
+        documentMode: "documentNode",
       },
     },
   },
