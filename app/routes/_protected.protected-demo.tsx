@@ -35,6 +35,7 @@ export default function ProtectedDemo() {
         {selection && (
           <Button
             type="button"
+            disabled={editStatus?.editing}
             onClick={async () => {
               await SendMessage({
                 messageType: "refresh-data-request",

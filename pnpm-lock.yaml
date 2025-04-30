@@ -11,6 +11,9 @@ importers:
       '@business-nxt/app-messaging-react':
         specifier: ^1.1.0
         version: 1.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@formkit/auto-animate':
+        specifier: 0.8.2
+        version: 0.8.2
       '@radix-ui/react-slot':
         specifier: ^1.2.0
         version: 1.2.0(@types/react@19.1.2)(react@19.1.0)
@@ -977,6 +980,9 @@ packages:
 
   '@fastify/busboy@3.1.1':
     resolution: {integrity: sha512-5DGmA8FTdB2XbDeEwc/5ZXBl6UbBAyBOOLlPuBnZ/N1SwdH9Ii+cOX3tBROlDgcTXxjOYnLMVoKk9+FXAw0CJw==}
+
+  '@formkit/auto-animate@0.8.2':
+    resolution: {integrity: sha512-SwPWfeRa5veb1hOIBMdzI+73te5puUBHmqqaF1Bu7FjvxlYSz/kJcZKSa9Cg60zL0uRNeJL2SbRxV6Jp6Q1nFQ==}
 
   '@graphql-codegen/add@5.0.3':
     resolution: {integrity: sha512-SxXPmramkth8XtBlAHu4H4jYcYXM/o3p01+psU+0NADQowA8jtYkK6MW5rV6T+CxkEaNZItfSmZRPgIuypcqnA==}
@@ -4622,6 +4628,8 @@ snapshots:
   '@fastify/busboy@2.1.1': {}
 
   '@fastify/busboy@3.1.1': {}
+
+  '@formkit/auto-animate@0.8.2': {}
 
   '@graphql-codegen/add@5.0.3(graphql@16.11.0)':
     dependencies:

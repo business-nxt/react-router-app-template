@@ -1,7 +1,13 @@
-import { SendMessage, useSelection } from "@business-nxt/app-messaging-react";
+import {
+  SendMessage,
+  useSelection,
+  useEditStatus,
+} from "@business-nxt/app-messaging-react";
 import { Lock } from "lucide-react";
 import { Link, useSearchParams, type MetaArgs } from "react-router";
 import { Button } from "~/components/ui/button";
+import { cn } from "~/lib/utils";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export function meta({}: MetaArgs) {
   return [{ title: "New Business NXT App" }];
@@ -9,14 +15,21 @@ export function meta({}: MetaArgs) {
 
 export default function Home() {
   const selection = useSelection();
+  const editStatus = useEditStatus();
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
+  const [parent] = useAutoAnimate();
 
   return (
     <main className="flex p-4">
       <div className="flex-1 flex flex-col gap-8 bg">
-        <header className="flex flex-col gap-4">
+        <header className="flex flex-col gap-4" ref={parent}>
           <div className="text-lg">Business NXT App Starter</div>
+          {editStatus?.editing && (
+            <p className="p-4 bg-red-50 border-red-500 border rounded-md">
+              You are in edit mode and the user interface is disabled.
+            </p>
+          )}
           <p>
             This is a starter template for a Business NXT app. You can use this
             template to get started with your app.
@@ -39,7 +52,11 @@ export default function Home() {
             Are you running this app in Business NXT?
           </div>
         )}
-        <div className="flex flex-row gap-4">
+        <div
+          className={cn("flex flex-row gap-4", {
+            "pointer-events-none opacity-50": editStatus?.editing,
+          })}
+        >
           {selection && (
             <Button
               type="button"
@@ -65,7 +82,7 @@ export default function Home() {
         </div>
         <div className="w-full space-y-6 px-4">
           <pre className="text-sm">
-            {JSON.stringify({ selection, params }, null, 2)}
+            {JSON.stringify({ editStatus, selection, params }, null, 2)}
           </pre>
         </div>
       </div>
