@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@business-nxt/app-messaging-react':
-        specifier: ^1.1.0
-        version: 1.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^2.0.0
+        version: 2.0.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@formkit/auto-animate':
         specifier: 0.8.2
         version: 0.8.2
@@ -446,14 +446,14 @@ packages:
     resolution: {integrity: sha512-H45s8fVLYjbhFH62dIJ3WtmJ6RSPt/3DRO0ZcT2SUiYiQyz3BLVb9ADEnLl91m74aQPS3AzzeajZHYOalWe3bg==}
     engines: {node: '>=6.9.0'}
 
-  '@business-nxt/app-messaging-react@1.1.0':
-    resolution: {integrity: sha512-wL3YtwaylkfURrAz2smLWtQONnzBLLU4rPS0nWWrqQjb+DYSr+l2Q4qeMECRdN1RfizwmPsxidd2ANP/RH3ZGw==}
+  '@business-nxt/app-messaging-react@2.0.0':
+    resolution: {integrity: sha512-qlojQBJSZEHoFkzXpB6UoU8QggvbWrS2eFsBVvy4cjLvGuypsB3EAOB/ZHt10TCt1a4PSJFkNMFzBMxZBmgdPw==}
     peerDependencies:
       react: ^18 || ^19
       react-dom: ^18 || ^19
 
-  '@business-nxt/app-messaging@1.1.0':
-    resolution: {integrity: sha512-a7v5OX8yNCTxBSjh8UZEWNgsjy9q09CAUx3HX7YCWO4WTd7FEPyDrmT9ldm3N2LAo4qloKCfVrk4850FukfVng==}
+  '@business-nxt/app-messaging@2.0.0':
+    resolution: {integrity: sha512-lqOQx4VUY0Qu2sPPplOtgs2BNEKPSI3lyXGyttqRZIzY/7cOvMTAGWUBw4Z0KzoosAerlraL0YyTg6Mz2OA2kQ==}
 
   '@cloudflare/kv-asset-handler@0.4.0':
     resolution: {integrity: sha512-+tv3z+SPp+gqTIcImN9o0hqE9xyfQjI1XD9pL6NuKjua9B1y7mNYv0S9cP+QEbA4ppVgGZEmKOvHX5G5Ei1CVA==}
@@ -4337,13 +4337,13 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@business-nxt/app-messaging-react@1.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@business-nxt/app-messaging-react@2.0.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@business-nxt/app-messaging': 1.1.0
+      '@business-nxt/app-messaging': 2.0.0
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@business-nxt/app-messaging@1.1.0': {}
+  '@business-nxt/app-messaging@2.0.0': {}
 
   '@cloudflare/kv-asset-handler@0.4.0':
     dependencies:

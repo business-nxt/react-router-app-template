@@ -12,7 +12,7 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
-    "@business-nxt/app-messaging-react": "^1.1.0",
+    "@business-nxt/app-messaging-react": "^2.0.0",
     "@formkit/auto-animate": "0.8.2",
     "@radix-ui/react-slot": "^1.2.0",
     "@react-router/cloudflare": "^7.5.3",
