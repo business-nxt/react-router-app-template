@@ -38,7 +38,7 @@
     "ts-pattern": "^5.7.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250430.0",
+    "@cloudflare/workers-types": "^4.20250505.0",
     "@graphql-codegen/cli": "^5.0.5",
     "@graphql-codegen/typescript-graphql-request": "^6.2.0",
     "@graphql-tools/load": "^8.1.0",
