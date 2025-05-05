@@ -45,7 +45,7 @@
     "@graphql-tools/url-loader": "^8.0.31",
     "@parcel/watcher": "^2.5.1",
     "@react-router/dev": "^7.5.3",
-    "@types/node": "^22.15.3",
+    "@types/node": "^22.15.8",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "autoprefixer": "^10.4.21",
