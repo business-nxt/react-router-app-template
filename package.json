@@ -24,7 +24,7 @@
     "clsx": "^2.1.1",
     "graphql": "^16.11.0",
     "graphql-request": "^7.1.2",
-    "isbot": "^5.1.27",
+    "isbot": "^5.1.28",
     "localforage": "^1.10.0",
     "lucide-react": "^0.487.0",
     "nanoid": "^5.1.5",
