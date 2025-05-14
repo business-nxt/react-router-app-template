@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { getStateFromWorker } from "~/utils/getStateFromWorker";
-import { useSharedWorker } from "./useSharedWorker";
+import { PostMessageOptions, useSharedWorker } from "./useSharedWorker";
 
 export function useSharedState() {
   const [internalState, setInternalState] = useState<any | null>();
@@ -23,7 +23,7 @@ export function useSharedState() {
   });
 
   const setState = useCallback(
-    (data: any, options?: SetStateOptions) => {
+    (data: any, options?: PostMessageOptions) => {
       console.log("setting state in callback", data);
       postMessage("set-state", data, options);
       setInternalState(data);

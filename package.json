@@ -5,7 +5,7 @@
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "wrangler dev",
-    "typecheck": "react-router typegen && tsc -b",
+    "typecheck": "react-router typegen && tsc -b --noEmit",
     "codegen": "graphql-codegen --config codegen.ts",
     "update-schema": "tsx --env-file=.env update-schema.ts",
     "deploy": "react-router build && wrangler deploy",

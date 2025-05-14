@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import { useEffect, useRef, useState } from "react";
 import AddinWorker from "~/workers/addin-worker?sharedworker";
 
-interface PostMessageOptions {
+export interface PostMessageOptions {
   delay?: number;
 }
 
