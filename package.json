@@ -47,7 +47,7 @@
     "@react-router/dev": "^7.8.0",
     "@types/node": "^22.17.1",
     "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
+    "@types/react-dom": "^19.1.9",
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.25.9",
     "postcss": "^8.5.6",
