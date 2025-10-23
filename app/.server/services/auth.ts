@@ -84,7 +84,6 @@ export class VismaStrategy extends OAuth2Strategy<UserInfo> {
       },
       async (data) => {
         const searchParams = new URL(data.request.url).searchParams;
-        console.log("VERIFYING", data);
         const accessToken = data.tokens.accessToken();
         const refreshToken = data.tokens.refreshToken();
         try {
@@ -99,7 +98,7 @@ export class VismaStrategy extends OAuth2Strategy<UserInfo> {
             expires_at,
           };
         } catch (ex) {
-          console.log("ERROR LOGGING IN", ex);
+          console.error("ERROR LOGGING IN", ex);
           throw new Error("Error logging in");
         }
       }
@@ -122,10 +121,8 @@ export async function getUserWithAccessToken(
   const session = await getSession(context);
   const user = (session.get("user") as UserInfo) ?? null;
   if (tokenIsExpired(user)) {
-    console.log("token expired", { user });
     const { update, cookie } = await refreshToken(context);
     if (update) {
-      console.log("token refreshed");
       return {
         user: user as UserInfo,
         cookie,
