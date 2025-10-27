@@ -71,6 +71,9 @@ export default function Home() {
             </Button>
           )}
           <Button asChild>
+            <Link to="/components">View Component Showcase</Link>
+          </Button>
+          <Button asChild variant="secondary">
             <Link
               to={`/protected-demo?${searchParams.toString()}`}
               className="gap-2"
@@ -81,8 +84,10 @@ export default function Home() {
           </Button>
         </div>
         <div className="w-full space-y-6 px-4">
-          <pre className="text-sm">
-            {JSON.stringify({ editStatus, selection, params }, null, 2)}
+          <pre className="text-sm bg-gray-100 p-4 rounded-md overflow-auto">
+            <code>
+              {JSON.stringify({ selection, params, editStatus }, null, 2)}
+            </code>
           </pre>
         </div>
       </div>

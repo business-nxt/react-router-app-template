@@ -74,7 +74,7 @@ export default function ComponentsShowcase() {
       {/* Alerts */}
       <section className="mb-12">
         <h2 className="text-2xl font-semibold mb-4">Alerts / Notifications</h2>
-        <div className="space-y-3">
+        <div className="flex flex-col gap-4">
           <Alert variant="information">
             <AlertTitle>Information</AlertTitle>
             <AlertDescription>This is an information notification.</AlertDescription>
@@ -132,7 +132,7 @@ export default function ComponentsShowcase() {
           </div>
           <div>
             <label className="block mb-2 font-medium">Switches</label>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-row flex-wrap gap-4">
               <Switch label="Enable feature" />
               <Switch label="Enabled by default" defaultChecked />
               <Switch label="Disabled switch" disabled />
