@@ -54,7 +54,7 @@
     "@graphql-tools/url-loader": "^8.0.33",
     "@parcel/watcher": "^2.5.1",
     "@react-router/dev": "^7.9.4",
-    "@tailwindcss/vite": "4.1.15",
+    "@tailwindcss/vite": "4.1.16",
     "@types/node": "^22.18.12",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
