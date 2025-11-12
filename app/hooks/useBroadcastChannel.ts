@@ -10,20 +10,16 @@ let channelRefCount = 0;
 function getSharedChannel(): BroadcastChannel {
   if (!sharedChannel) {
     sharedChannel = new BroadcastChannel(CHANNEL_NAME);
-    console.log(`[BroadcastChannel] Shared channel created`);
   }
   channelRefCount++;
-  console.log(`[BroadcastChannel] Channel ref count: ${channelRefCount}`);
   return sharedChannel;
 }
 
 function releaseSharedChannel(): void {
   channelRefCount--;
-  console.log(`[BroadcastChannel] Channel ref count: ${channelRefCount}`);
   if (channelRefCount === 0 && sharedChannel) {
     sharedChannel.close();
     sharedChannel = null;
-    console.log(`[BroadcastChannel] Shared channel closed`);
   }
 }
 
@@ -56,24 +52,15 @@ export function useBroadcastChannel(options?: {
   useEffect(() => {
     // Check if BroadcastChannel is supported
     if (typeof BroadcastChannel === "undefined") {
-      console.warn("BroadcastChannel not supported in this browser");
       return;
     }
 
     const bc = getSharedChannel();
     setChannel(bc);
-    console.log(`[BroadcastChannel][${id.slice(0, 6)}] Hook connected to shared channel`);
 
     // Create a message handler for this instance
     const handleMessage = (event: MessageEvent<BroadcastMessage>) => {
       const message = event.data;
-
-      console.log(`[BroadcastChannel][${id.slice(0, 6)}] Message received:`, {
-        type: message.type,
-        sender: message.sender_id?.slice(0, 6),
-        isOwnMessage: message.sender_id === id,
-        data: message.data,
-      });
 
       // Ignore reply messages (handled separately)
       if (message.reply_to) {
@@ -82,14 +69,10 @@ export function useBroadcastChannel(options?: {
 
       const currentActions = ref.current;
       if (!currentActions) {
-        console.log(`[BroadcastChannel][${id.slice(0, 6)}] No actions defined`);
         return;
       }
 
       if (currentActions[message.type]) {
-        console.log(
-          `[BroadcastChannel][${id.slice(0, 6)}] Executing action for: ${message.type}`
-        );
         currentActions[message.type]({
           data: message.data,
           sender_id: message.sender_id,
@@ -104,10 +87,6 @@ export function useBroadcastChannel(options?: {
             } as BroadcastMessage);
           },
         });
-      } else {
-        console.log(
-          `[BroadcastChannel][${id.slice(0, 6)}] No action handler for: ${message.type}`
-        );
       }
     };
 
@@ -115,7 +94,6 @@ export function useBroadcastChannel(options?: {
     bc.addEventListener("message", handleMessage);
 
     return () => {
-      console.log(`[BroadcastChannel][${id.slice(0, 6)}] Hook disconnected from shared channel`);
       if (handlerRef.current) {
         bc.removeEventListener("message", handlerRef.current);
       }
@@ -135,18 +113,9 @@ export function useBroadcastChannel(options?: {
         options,
       };
 
-      console.log(`[BroadcastChannel][${id.slice(0, 6)}] Posting message:`, {
-        type,
-        data,
-        delay: options?.delay,
-      });
-
       // Handle delayed messages
       if (options?.delay) {
         setTimeout(() => {
-          console.log(
-            `[BroadcastChannel][${id.slice(0, 6)}] Posting delayed message after ${options.delay}ms`
-          );
           channel?.postMessage(message);
         }, options.delay);
       } else {

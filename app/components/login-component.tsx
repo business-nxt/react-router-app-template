@@ -9,6 +9,8 @@ import { useStorageAccess } from "~/hooks/useStorageAccess";
 export function LoginComponent() {
   const { state, setState, postMessage } = useSharedState();
   const proxyRef = useRef<Window | null>(null);
+  const messageHandlerRef = useRef<((event: MessageEvent) => void) | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
   const { needsRequest, hasAccess, requestAccess, isLoading } = useStorageAccess();
   const [isRequestingAccess, setIsRequestingAccess] = useState(false);
   const [accessDenied, setAccessDenied] = useState(false);
@@ -17,7 +19,6 @@ export function LoginComponent() {
     // Only set initial state if it's not already set
     // This prevents overriding the state from other iframes
     if (!state || !state.ui) {
-      console.log("[LoginComponent] Setting initial state to normal");
       setState({
         ui: "normal",
       });
@@ -25,70 +26,62 @@ export function LoginComponent() {
   }, [setState, state]);
 
   const handleActivateClick = async () => {
-    console.log("[LoginComponent] handleActivateClick called", {
-      needsRequest,
-      hasAccess,
-    });
+    // Clean up any existing event listeners and abort controllers
+    if (messageHandlerRef.current) {
+      window.removeEventListener("message", messageHandlerRef.current);
+      messageHandlerRef.current = null;
+    }
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
 
     // If we need storage access (Safari in iframe), request it first
     if (needsRequest && !hasAccess) {
-      console.log("[LoginComponent] Requesting storage access...");
       setIsRequestingAccess(true);
       const granted = await requestAccess();
       setIsRequestingAccess(false);
-      console.log("[LoginComponent] Storage access result:", granted);
 
       if (!granted) {
-        console.log("[LoginComponent] Storage access denied, aborting");
         setAccessDenied(true);
         return;
       }
     }
 
     // Proceed with login
-    console.log("[LoginComponent] Setting state to login");
     setState({
       ui: "login",
     });
 
-    console.log("[LoginComponent] Opening popup...");
     const proxy = window.open(
       "/auth/login",
       "visma-login",
       "width=500,height=700"
     );
 
-    console.log("[LoginComponent] Popup opened:", {
-      proxy: proxy,
-      isNull: proxy === null,
-      closed: proxy?.closed,
-    });
-
     proxyRef.current = proxy;
     const abort = new AbortController();
-    let checkCount = 0;
+    abortControllerRef.current = abort;
 
     const interval = setInterval(() => {
-      checkCount++;
-      const isClosed = proxy?.closed;
-      console.log(`[LoginComponent] Interval check #${checkCount}:`, {
-        proxyIsNull: proxy === null,
-        closed: isClosed,
-      });
-
-      if (!isClosed) {
+      if (!proxy?.closed) {
         return;
       }
 
-      console.log("[LoginComponent] Popup detected as closed, calling completed()");
       completed();
     }, 1000);
 
     const completed = () => {
-      console.log("[LoginComponent] completed() called - resetting to normal state");
       postMessage("revalidate");
       clearInterval(interval);
       abort.abort();
+
+      // Clean up message handler
+      if (messageHandlerRef.current) {
+        window.removeEventListener("message", messageHandlerRef.current);
+        messageHandlerRef.current = null;
+      }
+
       setState(
         {
           ui: "normal",
@@ -100,20 +93,20 @@ export function LoginComponent() {
     };
 
     if (proxy) {
-      console.log("[LoginComponent] Attaching message listener to popup (not using beforeunload - it fires on navigation!)");
-
       // Listen for message from popup when auth completes
-      window.addEventListener("message", (event) => {
-        console.log("[LoginComponent] message event received from popup:", event.data);
+      const messageHandler = (event: MessageEvent) => {
+        // Validate origin to prevent XSS
+        if (event.origin !== window.location.origin) return;
+
         if (event.data === "auth-complete" || event.data?.type === "auth-complete") {
-          console.log("[LoginComponent] Auth complete message received");
           completed();
         }
-      }, {
+      };
+
+      messageHandlerRef.current = messageHandler;
+      window.addEventListener("message", messageHandler, {
         signal: abort.signal,
       });
-    } else {
-      console.error("[LoginComponent] Popup is null, cannot attach event listeners - Safari may have blocked it");
     }
   };
 
