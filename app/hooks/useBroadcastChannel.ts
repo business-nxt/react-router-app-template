@@ -3,6 +3,30 @@ import { useEffect, useRef, useState } from "react";
 
 const CHANNEL_NAME = "visma-app-sync";
 
+// Singleton channel to prevent multiple instances
+let sharedChannel: BroadcastChannel | null = null;
+let channelRefCount = 0;
+
+function getSharedChannel(): BroadcastChannel {
+  if (!sharedChannel) {
+    sharedChannel = new BroadcastChannel(CHANNEL_NAME);
+    console.log(`[BroadcastChannel] Shared channel created`);
+  }
+  channelRefCount++;
+  console.log(`[BroadcastChannel] Channel ref count: ${channelRefCount}`);
+  return sharedChannel;
+}
+
+function releaseSharedChannel(): void {
+  channelRefCount--;
+  console.log(`[BroadcastChannel] Channel ref count: ${channelRefCount}`);
+  if (channelRefCount === 0 && sharedChannel) {
+    sharedChannel.close();
+    sharedChannel = null;
+    console.log(`[BroadcastChannel] Shared channel closed`);
+  }
+}
+
 export interface PostMessageOptions {
   delay?: number;
 }
@@ -23,6 +47,7 @@ export function useBroadcastChannel(options?: {
   const [channel, setChannel] = useState<BroadcastChannel | null>(null);
   const [id] = useState(nanoid());
   const ref = useRef(actions);
+  const handlerRef = useRef<((event: MessageEvent<BroadcastMessage>) => void) | null>(null);
 
   useEffect(() => {
     ref.current = actions;
@@ -35,16 +60,20 @@ export function useBroadcastChannel(options?: {
       return;
     }
 
-    const bc = new BroadcastChannel(CHANNEL_NAME);
+    const bc = getSharedChannel();
     setChannel(bc);
+    console.log(`[BroadcastChannel][${id.slice(0, 6)}] Hook connected to shared channel`);
 
-    bc.onmessage = (event: MessageEvent<BroadcastMessage>) => {
+    // Create a message handler for this instance
+    const handleMessage = (event: MessageEvent<BroadcastMessage>) => {
       const message = event.data;
 
-      // Ignore messages from self
-      if (message.sender_id === id) {
-        return;
-      }
+      console.log(`[BroadcastChannel][${id.slice(0, 6)}] Message received:`, {
+        type: message.type,
+        sender: message.sender_id?.slice(0, 6),
+        isOwnMessage: message.sender_id === id,
+        data: message.data,
+      });
 
       // Ignore reply messages (handled separately)
       if (message.reply_to) {
@@ -52,12 +81,19 @@ export function useBroadcastChannel(options?: {
       }
 
       const currentActions = ref.current;
-      if (!currentActions) return;
+      if (!currentActions) {
+        console.log(`[BroadcastChannel][${id.slice(0, 6)}] No actions defined`);
+        return;
+      }
 
       if (currentActions[message.type]) {
+        console.log(
+          `[BroadcastChannel][${id.slice(0, 6)}] Executing action for: ${message.type}`
+        );
         currentActions[message.type]({
           data: message.data,
           sender_id: message.sender_id,
+          isOwnMessage: message.sender_id === id,
           sendReply: (data: any) => {
             bc.postMessage({
               data,
@@ -68,16 +104,22 @@ export function useBroadcastChannel(options?: {
             } as BroadcastMessage);
           },
         });
+      } else {
+        console.log(
+          `[BroadcastChannel][${id.slice(0, 6)}] No action handler for: ${message.type}`
+        );
       }
     };
 
-    bc.onerror = (error) => {
-      console.error("BroadcastChannel error:", error);
-    };
+    handlerRef.current = handleMessage;
+    bc.addEventListener("message", handleMessage);
 
     return () => {
-      bc.close();
-      console.log("closing broadcast channel", id);
+      console.log(`[BroadcastChannel][${id.slice(0, 6)}] Hook disconnected from shared channel`);
+      if (handlerRef.current) {
+        bc.removeEventListener("message", handlerRef.current);
+      }
+      releaseSharedChannel();
     };
   }, [id]);
 
@@ -93,9 +135,18 @@ export function useBroadcastChannel(options?: {
         options,
       };
 
+      console.log(`[BroadcastChannel][${id.slice(0, 6)}] Posting message:`, {
+        type,
+        data,
+        delay: options?.delay,
+      });
+
       // Handle delayed messages
       if (options?.delay) {
         setTimeout(() => {
+          console.log(
+            `[BroadcastChannel][${id.slice(0, 6)}] Posting delayed message after ${options.delay}ms`
+          );
           channel?.postMessage(message);
         }, options.delay);
       } else {

@@ -14,43 +14,78 @@ export function LoginComponent() {
   const [accessDenied, setAccessDenied] = useState(false);
 
   useEffect(() => {
-    setState({
-      ui: "normal",
-    });
-  }, []);
+    // Only set initial state if it's not already set
+    // This prevents overriding the state from other iframes
+    if (!state || !state.ui) {
+      console.log("[LoginComponent] Setting initial state to normal");
+      setState({
+        ui: "normal",
+      });
+    }
+  }, [setState, state]);
 
   const handleActivateClick = async () => {
+    console.log("[LoginComponent] handleActivateClick called", {
+      needsRequest,
+      hasAccess,
+    });
+
     // If we need storage access (Safari in iframe), request it first
     if (needsRequest && !hasAccess) {
+      console.log("[LoginComponent] Requesting storage access...");
       setIsRequestingAccess(true);
       const granted = await requestAccess();
       setIsRequestingAccess(false);
+      console.log("[LoginComponent] Storage access result:", granted);
 
       if (!granted) {
+        console.log("[LoginComponent] Storage access denied, aborting");
         setAccessDenied(true);
         return;
       }
     }
 
     // Proceed with login
+    console.log("[LoginComponent] Setting state to login");
     setState({
       ui: "login",
     });
+
+    console.log("[LoginComponent] Opening popup...");
     const proxy = window.open(
       "/auth/login",
       "visma-login",
       "width=500,height=700"
     );
+
+    console.log("[LoginComponent] Popup opened:", {
+      proxy: proxy,
+      isNull: proxy === null,
+      closed: proxy?.closed,
+    });
+
     proxyRef.current = proxy;
     const abort = new AbortController();
+    let checkCount = 0;
+
     const interval = setInterval(() => {
-      if (!proxy?.closed) {
+      checkCount++;
+      const isClosed = proxy?.closed;
+      console.log(`[LoginComponent] Interval check #${checkCount}:`, {
+        proxyIsNull: proxy === null,
+        closed: isClosed,
+      });
+
+      if (!isClosed) {
         return;
       }
+
+      console.log("[LoginComponent] Popup detected as closed, calling completed()");
       completed();
     }, 1000);
 
     const completed = () => {
+      console.log("[LoginComponent] completed() called - resetting to normal state");
       postMessage("revalidate");
       clearInterval(interval);
       abort.abort();
@@ -64,12 +99,22 @@ export function LoginComponent() {
       );
     };
 
-    proxy?.addEventListener("beforeunload", completed, {
-      signal: abort.signal,
-    });
-    proxy?.addEventListener("message", completed, {
-      signal: abort.signal,
-    });
+    if (proxy) {
+      console.log("[LoginComponent] Attaching message listener to popup (not using beforeunload - it fires on navigation!)");
+
+      // Listen for message from popup when auth completes
+      window.addEventListener("message", (event) => {
+        console.log("[LoginComponent] message event received from popup:", event.data);
+        if (event.data === "auth-complete" || event.data?.type === "auth-complete") {
+          console.log("[LoginComponent] Auth complete message received");
+          completed();
+        }
+      }, {
+        signal: abort.signal,
+      });
+    } else {
+      console.error("[LoginComponent] Popup is null, cannot attach event listeners - Safari may have blocked it");
+    }
   };
 
   return (
