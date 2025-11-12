@@ -1,20 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
-import { getStateFromWorker } from "~/utils/getStateFromWorker";
-import { PostMessageOptions, useSharedWorker } from "./useSharedWorker";
+import { useCallback, useState } from "react";
+import { PostMessageOptions, useBroadcastChannel } from "./useBroadcastChannel";
 
 export function useSharedState() {
   const [internalState, setInternalState] = useState<any | null>();
 
-  useEffect(() => {
-    getStateFromWorker().then((data) => {
-      setInternalState(data);
-    });
-  }, []);
-
-  const { postMessage } = useSharedWorker({
+  const { postMessage } = useBroadcastChannel({
     actions: {
       "set-state": ({ data }) => {
-        console.log("state update", data);
         if (data) {
           setInternalState(data);
         }
@@ -24,7 +16,6 @@ export function useSharedState() {
 
   const setState = useCallback(
     (data: any, options?: PostMessageOptions) => {
-      console.log("setting state in callback", data);
       postMessage("set-state", data, options);
       setInternalState(data);
     },

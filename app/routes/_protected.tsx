@@ -2,7 +2,7 @@ import { Outlet, useRevalidator, type LoaderFunctionArgs } from "react-router";
 import type { Route } from "./+types/_protected";
 import { getUserWithAccessToken } from "~/.server/services/auth";
 import { useEffect } from "react";
-import { useSharedWorker } from "~/hooks/useSharedWorker";
+import { useBroadcastChannel } from "~/hooks/useBroadcastChannel";
 import { useSharedState } from "~/hooks/useSharedState";
 import { LoginComponent } from "~/components/login-component";
 import { destroySession } from "~/.server/services/session";
@@ -49,7 +49,7 @@ export default function Protected({ loaderData }: Route.ComponentProps) {
   const { revalidate } = useRevalidator();
   const editStatus = useEditStatus();
 
-  useSharedWorker({
+  useBroadcastChannel({
     actions: {
       revalidate: () => {
         revalidate();
