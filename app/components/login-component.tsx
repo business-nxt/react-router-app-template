@@ -5,15 +5,20 @@ import { cn } from "~/lib/utils";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { useEffect, useRef, useState } from "react";
 import { useStorageAccess } from "~/hooks/useStorageAccess";
+import { useRevalidator } from "react-router";
 
 export function LoginComponent() {
   const { state, setState, postMessage } = useSharedState();
   const proxyRef = useRef<Window | null>(null);
-  const messageHandlerRef = useRef<((event: MessageEvent) => void) | null>(null);
+  const messageHandlerRef = useRef<((event: MessageEvent) => void) | null>(
+    null
+  );
   const abortControllerRef = useRef<AbortController | null>(null);
-  const { needsRequest, hasAccess, requestAccess, isLoading } = useStorageAccess();
+  const { needsRequest, hasAccess, requestAccess, isLoading } =
+    useStorageAccess();
   const [isRequestingAccess, setIsRequestingAccess] = useState(false);
   const [accessDenied, setAccessDenied] = useState(false);
+  const { revalidate } = useRevalidator();
 
   useEffect(() => {
     // Only set initial state if it's not already set
@@ -72,6 +77,7 @@ export function LoginComponent() {
     }, 1000);
 
     const completed = () => {
+      revalidate();
       postMessage("revalidate");
       clearInterval(interval);
       abort.abort();
@@ -98,7 +104,10 @@ export function LoginComponent() {
         // Validate origin to prevent XSS
         if (event.origin !== window.location.origin) return;
 
-        if (event.data === "auth-complete" || event.data?.type === "auth-complete") {
+        if (
+          event.data === "auth-complete" ||
+          event.data?.type === "auth-complete"
+        ) {
           completed();
         }
       };
@@ -119,10 +128,12 @@ export function LoginComponent() {
           <AlertTitle>Storage Access Required</AlertTitle>
           <AlertDescription className="space-y-2">
             <p>
-              This application needs cookie and storage access to function properly in Safari.
+              This application needs cookie and storage access to function
+              properly in Safari.
             </p>
             <p className="text-sm">
-              Please allow storage access when prompted, or use Chrome/Edge for the best experience.
+              Please allow storage access when prompted, or use Chrome/Edge for
+              the best experience.
             </p>
           </AlertDescription>
         </Alert>
@@ -176,7 +187,9 @@ export function LoginComponent() {
         onClick={handleActivateClick}
         disabled={isLoading || isRequestingAccess}
       >
-        {needsRequest && !hasAccess && !accessDenied ? "Enable & Activate Application" : "Activate Application"}
+        {needsRequest && !hasAccess && !accessDenied
+          ? "Enable & Activate Application"
+          : "Activate Application"}
       </Button>
 
       {/* Retry button if access was denied */}
