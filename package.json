@@ -1,7 +1,9 @@
 {
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@9.6.0",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "wrangler dev",
